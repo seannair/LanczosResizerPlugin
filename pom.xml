@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://apache.org"
-         xmlns:xsi="http://w3.org"
-         xsi:schemaLocation="http://apache.org http://apache.org">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- This links directly to the master version profiles used by the Fiji ecosystem -->
+    <parent>
+        <groupId>org.scijava</groupId>
+        <artifactId>pom-scijava</artifactId>
+        <version>37.0.0</version>
+        <relativePath />
+    </parent>
 
     <groupId>com.microscopy</groupId>
     <artifactId>lanczos-resizer</artifactId>
@@ -15,12 +23,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Points Maven directly to your folder path -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
-    <!-- Pulls from the official SciJava servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -28,13 +34,23 @@
         </repository>
     </repositories>
 
-    <!-- Links directly to the pre-packaged Fiji Master dependency layout -->
+    <!-- By using the parent pom, we don't have to specify error-prone version numbers -->
     <dependencies>
         <dependency>
-            <groupId>sc.fiji</groupId>
-            <artifactId>fiji</artifactId>
-            <version>2.6.1</version>
-            <type>pom</type>
+            <groupId>net.imagej</groupId>
+            <artifactId>ij</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-ij</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-algorithm</artifactId>
         </dependency>
     </dependencies>
 </project>
