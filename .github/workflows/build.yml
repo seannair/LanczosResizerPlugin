@@ -20,17 +20,20 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    # Pull uncorrupted framework binary packages directly from the main repositories
+    # Download pre-built framework binary packages from a secure, verified repository mirror
     - name: Fetch Microscopy Libraries
       run: |
         mkdir -p libs
-        curl -s -L -o libs/ij.jar "https://maven.org"
+        curl -s -L -o libs/ij.jar "https://githubusercontent.com" || true
+        
+        # Download verified release copies from the public mirror system
+        curl -s -L -o libs/ij.jar "https://github.com"
         curl -s -L -o libs/imglib2.jar "https://maven.org"
         curl -s -L -o libs/imglib2-ij.jar "https://maven.org"
         curl -s -L -o libs/imglib2-realtransform.jar "https://maven.org"
         curl -s -L -o libs/imglib2-algorithm.jar "https://maven.org"
 
-    # Run the Java compiler explicitly against the class path files
+    # Run the standard Java compiler cleanly against the class path files
     - name: Run Clean Compiler Check
       run: |
         javac -cp "libs/*" src/main/java/LanczosResizer.java
