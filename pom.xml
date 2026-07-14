@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://apache.org"
+         xmlns:xsi="http://w3.org"
+         xsi:schemaLocation="http://apache.org http://apache.org">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.microscopy</groupId>
@@ -15,12 +15,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Configures the folder where your script is located -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
-    <!-- Adds the official SciJava servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -28,27 +26,26 @@
         </repository>
     </repositories>
 
-    <!-- Explicitly set verified versions to bypass broken external indices -->
     <dependencies>
-        <!-- Core ImageJ -->
+        <!-- Core ImageJ Package -->
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
             <version>1.54g</version>
         </dependency>
-        <!-- Core ImgLib2 -->
+        <!-- Core ImgLib2 Package -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
             <version>6.1.0</version>
         </dependency>
-        <!-- ImgLib2 ImageJ Compatibility Bridge (Using a stable release tag) -->
+        <!-- Modern ImageJ UI Link Wrapper Interface -->
         <dependency>
             <groupId>net.imglib2</groupId>
-            <artifactId>imglib2-ij</artifactId>
-            <version>2.0.0-beta-44</version>
+            <artifactId>imglib2-imglyb</artifactId>
+            <version>1.1.0</version>
         </dependency>
-        <!-- ImgLib2 Algorithms -->
+        <!-- ImgLib2 Transform Algorithms -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-algorithm</artifactId>
