@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - main
-      - master
 
   pull_request:
     branches:
       - main
-      - master
+
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,6 +31,13 @@ jobs:
           java -version
           mvn -version
 
-      - name: Build with Maven
+      - name: Build JAR with Maven
         run: |
-          mvn -B -ntp clean package || mvn -B -ntp clean package
+          mvn -B -ntp clean package
+
+      - name: Upload compiled JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: LanczosResizerPlugin
+          path: target/*.jar
+          if-no-files-found: error
