@@ -11,30 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Pull down your code
     - name: Checkout Repository
       uses: actions/checkout@v5
 
+    # 2. Open up a clean Java 11 environment
     - name: Set up JDK 11
       uses: actions/setup-java@v5.5.0
       with:
         java-version: '11'
         distribution: 'temurin'
+        cache: 'maven'
 
-    # Download pre-built framework binary packages from a secure, verified repository mirror
-    - name: Fetch Microscopy Libraries
-      run: |
-        mkdir -p libs
-        curl -s -L -o libs/ij.jar "https://githubusercontent.com" || true
-        
-        # Download verified release copies from the public mirror system
-        curl -s -L -o libs/ij.jar "https://github.com"
-        curl -s -L -o libs/imglib2.jar "https://maven.org"
-        curl -s -L -o libs/imglib2-ij.jar "https://maven.org"
-        curl -s -L -o libs/imglib2-realtransform.jar "https://maven.org"
-        curl -s -L -o libs/imglib2-algorithm.jar "https://maven.org"
+    # 3. Clean up any broken folders left from previous runs
+    - name: Clean Environment
+      run: rm -rf libs target
 
-    # Run the standard Java compiler cleanly against the class path files
-    - name: Run Clean Compiler Check
-      run: |
-        javac -cp "libs/*" src/main/java/LanczosResizer.java
-        echo "Compilation check successful! No syntax or declaration errors detected."
+    # 4. Use GitHub's native project compiler
+    # This automatically downloads and builds the code using your project settings
+    - name: Compile with Maven Natively
+      run: mvn -B clean test-compile
