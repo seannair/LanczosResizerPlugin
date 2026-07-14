@@ -15,12 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Configure the location of your script -->
+    <!-- Points Maven directly to your folder path -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
-    <!-- Configure the master SciJava ecosystem servers -->
+    <!-- Pulls from the official SciJava servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -28,36 +28,13 @@
         </repository>
     </repositories>
 
-    <!-- The Master BOM manages all specific version numbers automatically -->
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.scijava</groupId>
-                <artifactId>pom-scijava</artifactId>
-                <version>39.0.0</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <!-- Simple, clean declarations without manual version tags -->
+    <!-- Links directly to the pre-packaged Fiji Master dependency layout -->
     <dependencies>
         <dependency>
-            <groupId>net.imagej</groupId>
-            <artifactId>ij</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.imglib2</groupId>
-            <artifactId>imglib2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.imglib2</groupId>
-            <artifactId>imglib2-ij</artifactId>
-            </dependency>
-        <dependency>
-            <groupId>net.imglib2</groupId>
-            <artifactId>imglib2-algorithm</artifactId>
+            <groupId>sc.fiji</groupId>
+            <artifactId>fiji</artifactId>
+            <version>2.6.1</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 </project>
