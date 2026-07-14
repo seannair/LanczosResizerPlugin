@@ -19,17 +19,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        cache: 'maven' # Speeds up future checks by saving data
 
-    # This cleanly downloads ImageJ and ImgLib2 without broken links
-    - name: Fetch Dependencies via Maven Dependency Plugin
-      run: |
-        mkdir -p libs
-        mvn dependency:get -DrepoUrl=https://scijava.org -Dartifact=net.imagej:ij:1.54g -Ddest=libs/ij.jar
-        mvn dependency:get -DrepoUrl=https://scijava.org -Dartifact=net.imglib2:imglib2:6.1.0 -Ddest=libs/imglib2.jar
-        mvn dependency:get -DrepoUrl=https://scijava.org -Dartifact=net.imglib2:imglib2-ij:2.0.0-beta-46 -Ddest=libs/imglib2-ij.jar
-        mvn dependency:get -DrepoUrl=https://scijava.org -Dartifact=net.imglib2:imglib2-algorithm:0.13.0 -Ddest=libs/imglib2-algorithm.jar
-
-    - name: Compile Java Code
-      run: |
-        javac -cp "libs/*" LanczosResizer.java
-        echo "Compilation check successful! No syntax or declaration errors detected."
+    - name: Compile and Test with Maven
+      run: mvn clean compile
