@@ -20,12 +20,18 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    # Securely download packages using Maven's own internal download system
-    - name: Fetch Verified Dependencies Natively
-      run: mvn dependency:copy-dependencies -DoutputDirectory=libs
+    # Pull uncorrupted framework binary packages directly from the main repositories
+    - name: Fetch Microscopy Libraries
+      run: |
+        mkdir -p libs
+        curl -s -L -o libs/ij.jar "https://maven.org"
+        curl -s -L -o libs/imglib2.jar "https://maven.org"
+        curl -s -L -o libs/imglib2-ij.jar "https://maven.org"
+        curl -s -L -o libs/imglib2-realtransform.jar "https://maven.org"
+        curl -s -L -o libs/imglib2-algorithm.jar "https://maven.org"
 
-    # Compile the file directly from its folder path using the clean downloads
-    - name: Direct Classpath Compilation Check
+    # Run the Java compiler explicitly against the class path files
+    - name: Run Clean Compiler Check
       run: |
         javac -cp "libs/*" src/main/java/LanczosResizer.java
         echo "Compilation check successful! No syntax or declaration errors detected."
