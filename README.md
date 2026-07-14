@@ -10,7 +10,7 @@ Unlike standard resizing tools that break image metadata, this plugin automatica
 1. Download the `LanczosResizer.java` file from this repository.
 2. Open **Fiji / ImageJ**.
 3. Drag and drop the `LanczosResizer.java` file directly onto the Fiji search bar, or save it into your Fiji directory under the `/plugins/` folder and restart Fiji.
-
+.
 ### 2. Running the Tool
 1. Open your microscopy image stack in Fiji.
 2. Run the plugin by navigating to `Plugins > Lanczos Resizer`.
