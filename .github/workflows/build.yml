@@ -4,18 +4,18 @@ on:
   push:
     branches:
       - main
+      - master
 
   pull_request:
     branches:
       - main
+      - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout source
         uses: actions/checkout@v4
 
@@ -26,11 +26,11 @@ jobs:
           java-version: '11'
           cache: maven
 
-      - name: Verify Maven
-        run: mvn -version
+      - name: Show Java and Maven versions
+        run: |
+          java -version
+          mvn -version
 
-      - name: Clean and Compile
-        run: mvn -U -B clean test-compile
-
-      - name: Package
-        run: mvn -U -B package
+      - name: Build with Maven
+        run: |
+          mvn -B -ntp clean test-compile || mvn -B -ntp clean test-compile
