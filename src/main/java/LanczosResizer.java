@@ -124,13 +124,20 @@ transform.set(
     0, 1.0 / scale, 0
 );
 
-// Map continuous transformed coordinates across pixel arrays
-RealRandomAccessible<FloatType> transformed = RealViews.affine(interpolated, transform);
+            // Map continuous transformed coordinates across pixel arrays
+RealRandomAccessible<FloatType> transformed =
+        RealViews.affine(interpolated, transform);
+
+// Convert to discrete pixel grid
+RandomAccessible<FloatType> raster =
+        Views.raster(transformed);
 
 // Constrain transformed infinite space into target image dimensions bounding boxes
-RandomAccessibleInterval<FloatType> output = Views.interval(
-    transformed,
-    Intervals.createMinSize(0, 0, width, height)
+RandomAccessibleInterval<FloatType> output =
+        Views.interval(
+                raster,
+                Intervals.createMinSize(0, 0, width, height)
+
 );
             
             // Bridge back into ImageJ environment
