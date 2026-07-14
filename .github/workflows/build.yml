@@ -20,17 +20,11 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    # Download verified framework archives directly from the central storage mirrors
-    - name: Download Verified Library Bundles
-      run: |
-        mkdir -p libs
-        curl -L -o libs/ij.jar "https://maven.org"
-        curl -L -o libs/imglib2.jar "https://maven.org"
-        curl -L -o libs/imglib2-ij.jar "https://maven.org"
-        curl -L -o libs/imglib2-realtransform.jar "https://maven.org"
-        curl -L -o libs/imglib2-algorithm.jar "https://maven.org"
+    # Securely download packages using Maven's own internal download system
+    - name: Fetch Verified Dependencies Natively
+      run: mvn dependency:copy-dependencies -DoutputDirectory=libs
 
-    # Compile the file directly from its folder path
+    # Compile the file directly from its folder path using the clean downloads
     - name: Direct Classpath Compilation Check
       run: |
         javac -cp "libs/*" src/main/java/LanczosResizer.java
