@@ -3,7 +3,7 @@ import ij.process.*;
 import ij.gui.*;
 import ij.plugin.PlugIn;
 import ij.measure.Calibration;
-
+import net.imglib2.RandomAccessible;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.RealRandomAccessible;
 import net.imglib2.img.Img;
