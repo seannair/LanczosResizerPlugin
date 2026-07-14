@@ -15,11 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- This line tells Maven to look in the main folder instead of a deep folder structure -->
+    <!-- Configure the location of your script -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
+    <!-- Configure the master SciJava ecosystem servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -27,26 +28,36 @@
         </repository>
     </repositories>
 
+    <!-- The Master BOM manages all specific version numbers automatically -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.scijava</groupId>
+                <artifactId>pom-scijava</artifactId>
+                <version>39.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- Simple, clean declarations without manual version tags -->
     <dependencies>
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
-            <version>1.54g</version>
         </dependency>
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
-            <version>6.1.0</version>
         </dependency>
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-ij</artifactId>
-            <version>2.0.0-beta-44</version>
-        </dependency>
+            </dependency>
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-algorithm</artifactId>
-            <version>0.13.0</version>
         </dependency>
     </dependencies>
 </project>
