@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.microscopy</groupId>
+    <artifactId>lanczos-resizer</artifactId>
+    <version>1.0.0</version>
+    <name>Lanczos Resizer</name>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- Configure the official SciJava repository links -->
+    <repositories>
+        <repository>
+            <id>scijava.public</id>
+            <url>https://scijava.org</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- Core ImageJ Library -->
+        <dependency>
+            <groupId>net.imagej</groupId>
+            <artifactId>ij</artifactId>
+            <version>1.54g</version>
+        </dependency>
+        <!-- Core ImgLib2 Library -->
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2</artifactId>
+            <version>6.1.0</version>
+        </dependency>
+        <!-- ImgLib2 ImageJ Compatibility Bridge -->
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-ij</artifactId>
+            <version>2.0.0-beta-44</version>
+        </dependency>
+        <!-- ImgLib2 Algorithms (for interpolation spaces) -->
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-algorithm</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+    </dependencies>
+</project>
