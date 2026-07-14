@@ -4,14 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- This links directly to the master version profiles used by the Fiji ecosystem -->
-    <parent>
-        <groupId>org.scijava</groupId>
-        <artifactId>pom-scijava</artifactId>
-        <version>37.0.0</version>
-        <relativePath />
-    </parent>
-
     <groupId>com.microscopy</groupId>
     <artifactId>lanczos-resizer</artifactId>
     <version>1.0.0</version>
@@ -23,10 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Configures the folder where your script is located -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
+    <!-- Adds the official SciJava servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -34,23 +28,31 @@
         </repository>
     </repositories>
 
-    <!-- By using the parent pom, we don't have to specify error-prone version numbers -->
+    <!-- Explicitly set verified versions to bypass broken external indices -->
     <dependencies>
+        <!-- Core ImageJ -->
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
+            <version>1.54g</version>
         </dependency>
+        <!-- Core ImgLib2 -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
+            <version>6.1.0</version>
         </dependency>
+        <!-- ImgLib2 ImageJ Compatibility Bridge (Using a stable release tag) -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-ij</artifactId>
+            <version>2.0.0-beta-44</version>
         </dependency>
+        <!-- ImgLib2 Algorithms -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-algorithm</artifactId>
+            <version>0.13.0</version>
         </dependency>
     </dependencies>
 </project>
