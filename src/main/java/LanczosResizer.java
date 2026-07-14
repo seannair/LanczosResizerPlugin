@@ -8,7 +8,7 @@ import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.RealRandomAccessible;
 import net.imglib2.img.Img;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.img.imageplus.ImagePlusAdapter;
+import net.imglib2.img.imageplus.ImagePlusImgs;
 import net.imglib2.interpolation.InterpolatorFactory;
 import net.imglib2.interpolation.randomaccess.LanczosInterpolatorFactory;
 import net.imglib2.realtransform.AffineTransform2D;
@@ -107,7 +107,7 @@ public class LanczosResizer implements PlugIn {
             ImageProcessor ip = imp.getStack().getProcessor(z).convertToFloat();
 
             // Wrap native ImageJ processor to utilize ImgLib2 framework constructs
-            Img<FloatType> img = ImagePlusAdapter.wrapFloat(new ImagePlus("", ip));
+            Img<FloatType> img = ImagePlusImgs.from(new ImagePlus("", ip));
 
             // Establish the Lanczos kernel to sample coordinates across space boundaries
             InterpolatorFactory<FloatType, ?> factory = new LanczosInterpolatorFactory<>();
