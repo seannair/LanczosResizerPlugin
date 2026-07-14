@@ -117,21 +117,22 @@ public class LanczosResizer implements PlugIn {
             );
 
             // Construct explicit 2D scaling transformations
+
             AffineTransform2D transform = new AffineTransform2D();
-            transform.set(
-                    1/ scale, 0, 0,
-                    0, 1.0 scale, 0
-            );
+transform.set(
+    1.0 / scale, 0, 0,
+    0, 1.0 / scale, 0
+);
 
-            // Map continuous transformed coordinates across pixel arrays
-            RealRandomAccessible<FloatType> transformed = RealViews.affine(interpolated, transform);
+// Map continuous transformed coordinates across pixel arrays
+RealRandomAccessible<FloatType> transformed = RealViews.affine(interpolated, transform);
 
-            // Constrain transformed infinite space into target image dimensions bounding boxes
-            RandomAccessibleInterval<FloatType> output = Views.interval(
-                    transformed,
-                    Intervals.createMinSize(0, 0, width, height);
-
-
+// Constrain transformed infinite space into target image dimensions bounding boxes
+RandomAccessibleInterval<FloatType> output = Views.interval(
+    transformed,
+    Intervals.createMinSize(0, 0, width, height)
+);
+            
             // Bridge back into ImageJ environment
             ImagePlus temp = ImageJFunctions.wrap(output, "Slice_" + z);
             ImageProcessor resized = temp.getProcessor();
