@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://apache.org"
-         xmlns:xsi="http://w3.org"
-         xsi:schemaLocation="http://apache.org http://apache.org">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 1. INHERIT FROM THE OFFICIAL SCIJAVA POM -->
-    <!-- This gives us immediate access to perfectly synchronized version numbers -->
     <parent>
         <groupId>org.scijava</groupId>
         <artifactId>pom-scijava</artifactId>
-        <version>30.0.0</version>
+        <version>43.0.0</version>
         <relativePath />
     </parent>
 
     <groupId>com.microscopy</groupId>
     <artifactId>lanczos-resizer</artifactId>
     <version>1.0.0</version>
+
     <name>Lanczos Resizer</name>
+    <description>High-quality Lanczos image resampling plugin for ImageJ/Fiji</description>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-    </build>
-
-    <!-- 2. DEFINE THE SCIJAVA PUBLIC REPOSITORY -->
     <repositories>
         <repository>
             <id>scijava.public</id>
-            <url>https://scijava.org</url>
+            <url>https://maven.scijava.org/content/groups/public</url>
         </repository>
     </repositories>
 
-    <!-- 3. DECLARE DEPENDENCIES WITHOUT VERSION STRINGS -->
-    <!-- The parent block above fills in the correct versions automatically -->
     <dependencies>
+
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
         </dependency>
+
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
         </dependency>
+
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-ij</artifactId>
         </dependency>
+
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-realtransform</artifactId>
         </dependency>
+
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-algorithm</artifactId>
         </dependency>
+
     </dependencies>
+
 </project>
