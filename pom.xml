@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://apache.org">
+<project xmlns="http://apache.org"
+         xmlns:xsi="http://w3.org"
+         xsi:schemaLocation="http://apache.org http://apache.org">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.microscopy</groupId>
@@ -15,12 +15,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Configure the location of your script -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
-    <!-- Configure the master stable SciJava ecosystem servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -28,31 +26,19 @@
         </repository>
     </repositories>
 
-    <!-- Explicitly declaring the current production-grade versions -->
     <dependencies>
-        <!-- Core ImageJ Library -->
+        <!-- The core ImageJ package -->
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
             <version>1.54g</version>
         </dependency>
-        <!-- Core ImgLib2 Package -->
+        
+        <!-- The complete, modern ImgLib2 framework bundle -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
             <version>6.1.0</version>
-        </dependency>
-        <!-- The critical bridge library containing net.imglib2.img.display.imagej -->
-        <dependency>
-            <groupId>net.imglib2</groupId>
-            <artifactId>imglib2-ij</artifactId>
-            <version>7.1.1</version>
-        </dependency>
-        <!-- Transform Algorithms needed for interpolation math -->
-        <dependency>
-            <groupId>net.imglib2</groupId>
-            <artifactId>imglib2-algorithm</artifactId>
-            <version>0.13.0</version>
         </dependency>
     </dependencies>
 </project>
