@@ -20,9 +20,82 @@
 
     <name>Lanczos Resizer</name>
 
+    <description>
+        High-quality Lanczos image resampling plugin for ImageJ/Fiji using ImgLib2.
+    </description>
+
+    <url>https://github.com/seannair/LanczosResizerPlugin</url>
+
+    <inceptionYear>2026</inceptionYear>
+
+    <organization>
+        <name>Independent Developer</name>
+        <url>https://github.com/seannair</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>seannair</id>
+            <name>Sean Nair</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Sean Nair</name>
+        </contributor>
+    </contributors>
+
+    <mailingLists>
+        <mailingList>
+            <name>GitHub Issues</name>
+            <archive>https://github.com/seannair/LanczosResizerPlugin/issues</archive>
+        </mailingList>
+    </mailingLists>
+
+    <scm>
+        <connection>
+            scm:git:git://github.com/seannair/LanczosResizerPlugin.git
+        </connection>
+        <developerConnection>
+            scm:git:ssh://github.com/seannair/LanczosResizerPlugin.git
+        </developerConnection>
+        <url>
+            https://github.com/seannair/LanczosResizerPlugin
+        </url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>
+            https://github.com/seannair/LanczosResizerPlugin/issues
+        </url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>GitHub Actions</system>
+        <url>
+            https://github.com/seannair/LanczosResizerPlugin/actions
+        </url>
+    </ciManagement>
+
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <license.licenseName>MIT</license.licenseName>
+        <license.copyrightOwners>Sean Nair</license.copyrightOwners>
     </properties>
 
     <repositories>
@@ -62,3 +135,4 @@
     </dependencies>
 
 </project>
+`
