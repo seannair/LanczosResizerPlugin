@@ -27,18 +27,40 @@
     </repositories>
 
     <dependencies>
-        <!-- The core ImageJ package -->
+        <!-- Core ImageJ Package -->
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
             <version>1.54g</version>
         </dependency>
         
-        <!-- The complete, modern ImgLib2 framework bundle -->
+        <!-- Core ImgLib2 Package -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
             <version>6.1.0</version>
         </dependency>
+
+        <!-- Production Release of the ImageJ/ImgLib2 Compatibility Bridge -->
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-ij</artifactId>
+            <version>2.0.0-beta-45</version>
+        </dependency>
+
+        <!-- Spatial Transformation Engine for Affine transforms -->
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-realtransform</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
+        <!-- Algorithm layer required for Interpolators -->
+        <dependency>
+            <groupId>net.imglib2</groupId>
+            <artifactId>imglib2-algorithm</artifactId>
+            <version>0.13.0</version>
+        </dependency>
     </dependencies>
 </project>
+
