@@ -9,7 +9,6 @@ import net.imglib2.RealRandomAccessible;
 import net.imglib2.img.Img;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.img.imageplus.ImagePlusImgs;
-import net.imglib2.interpolation.InterpolatorFactory;
 import net.imglib2.interpolation.randomaccess.LanczosInterpolatorFactory;
 import net.imglib2.realtransform.AffineTransform2D;
 import net.imglib2.realtransform.RealViews;
@@ -110,8 +109,7 @@ public class LanczosResizer implements PlugIn {
             Img<FloatType> img = ImagePlusImgs.from(new ImagePlus("", ip));
 
             // Establish the Lanczos kernel to sample coordinates across space boundaries
-            InterpolatorFactory<FloatType, ?> factory = new LanczosInterpolatorFactory<>();
-
+            LanczosInterpolatorFactory<FloatType> factory = new LanczosInterpolatorFactory<>();
             // Set up boundary expansion strategy (Zero-padding/out-of-bounds containment)
             RealRandomAccessible<FloatType> interpolated = Views.interpolate(
                     Views.extendZero(img),
@@ -121,8 +119,8 @@ public class LanczosResizer implements PlugIn {
             // Construct explicit 2D scaling transformations
             AffineTransform2D transform = new AffineTransform2D();
             transform.set(
-                    scale, 0, 0,
-                    0, scale, 0
+                    1/ scale, 0, 0,
+                    0, 1.0 scale, 0
             );
 
             // Map continuous transformed coordinates across pixel arrays
@@ -131,8 +129,8 @@ public class LanczosResizer implements PlugIn {
             // Constrain transformed infinite space into target image dimensions bounding boxes
             RandomAccessibleInterval<FloatType> output = Views.interval(
                     transformed,
-                    Intervals.createMinSize(new long[]{0, 0}, new long[]{width, height})
-            );
+                    Intervals.createMinSize(0, 0, width, height);
+
 
             // Bridge back into ImageJ environment
             ImagePlus temp = ImageJFunctions.wrap(output, "Slice_" + z);
