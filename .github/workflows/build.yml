@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - main
-      - master
 
   pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -15,7 +16,7 @@ jobs:
 
     steps:
 
-      - name: Checkout repository
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -25,5 +26,11 @@ jobs:
           java-version: '11'
           cache: maven
 
-      - name: Build with Maven
-        run: mvn -B clean package
+      - name: Verify Maven
+        run: mvn -version
+
+      - name: Clean and Compile
+        run: mvn -U -B clean test-compile
+
+      - name: Package
+        run: mvn -U -B package
