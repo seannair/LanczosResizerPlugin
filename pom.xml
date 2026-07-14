@@ -15,10 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- Connects directly to your source directory folder -->
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
     </build>
 
+    <!-- Configures the official stable SciJava servers -->
     <repositories>
         <repository>
             <id>scijava.public</id>
@@ -26,36 +28,37 @@
         </repository>
     </repositories>
 
+    <!-- Explicitly declaring the current production-grade release versions -->
     <dependencies>
-        <!-- Core ImageJ Package -->
+        <!-- Core ImageJ Library -->
         <dependency>
             <groupId>net.imagej</groupId>
             <artifactId>ij</artifactId>
             <version>1.54g</version>
         </dependency>
         
-        <!-- Core ImgLib2 Package -->
+        <!-- Core ImgLib2 Engine Package -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2</artifactId>
             <version>6.1.0</version>
         </dependency>
 
-        <!-- Production Release of the ImageJ/ImgLib2 Compatibility Bridge -->
+        <!-- Current stable production release of the ImageJ compatibility bridge -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-ij</artifactId>
-            <version>2.0.0-beta-45</version>
+            <version>2.0.0</version>
         </dependency>
 
-        <!-- Spatial Transformation Engine for Affine transforms -->
+        <!-- Production transformation engine required for Affine transforms -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-realtransform</artifactId>
             <version>3.1.1</version>
         </dependency>
 
-        <!-- Algorithm layer required for Interpolators -->
+        <!-- Stable algorithm layer required for Interpolators -->
         <dependency>
             <groupId>net.imglib2</groupId>
             <artifactId>imglib2-algorithm</artifactId>
@@ -63,4 +66,3 @@
         </dependency>
     </dependencies>
 </project>
-
