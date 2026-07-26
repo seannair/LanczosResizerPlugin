@@ -1,3 +1,4 @@
+# Not functional #
 # Lanczos Microscopy Resizer (ImgLib2 + ImageJ/Fiji)
 
 A plugin designed to scale 2D and 3D image stacks plane-by-plane using high-fidelity Lanczos interpolation via the ImgLib2 framework. 
