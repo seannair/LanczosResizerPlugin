@@ -16,7 +16,7 @@
 
     <groupId>com.microscopy</groupId>
     <artifactId>lanczos-resizer</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
 
     <name>Lanczos Resizer</name>
 
@@ -132,6 +132,26 @@
             <artifactId>imglib2-algorithm</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- append to the parent's argLine (JaCoCo agent); ImageJ must be headless -->
+                    <argLine>${argLine} -Djava.awt.headless=true</argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

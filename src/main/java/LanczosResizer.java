@@ -1,4 +1,3 @@
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -6,6 +5,7 @@ import ij.gui.GenericDialog;
 import ij.measure.Calibration;
 import ij.plugin.PlugIn;
 import ij.plugin.filter.GaussianBlur;
+import ij.process.FloatProcessor;
 import ij.process.ImageProcessor;
 
 import java.nio.ByteBuffer;
@@ -35,28 +35,21 @@ import net.imglib2.view.Views;
  * This is 2D plane-wise resampling, not true 3D interpolation through Z.
  *
  * @author Sean Nair
- * @version 1.1.0
+ * @version 1.2.0
  */
 public class LanczosResizer implements PlugIn {
 
-    private static final String VERSION = "1.1.0";
-    private static final String KEEP_ORIGINAL = "Keep original bit depth";
-    private static final String FLOAT_32 = "32-bit float (recommended for quantitative data)";
-    private static final String UNSIGNED_16 = "16-bit unsigned (no contrast scaling)";
-    private static final String UNSIGNED_8 = "8-bit unsigned (no contrast scaling)";
+    static final String VERSION = "1.2.0";
+    static final String KEEP_ORIGINAL = "Keep original bit depth";
+    static final String FLOAT_32 = "32-bit float (recommended for quantitative data)";
+    static final String UNSIGNED_16 = "16-bit unsigned (no contrast scaling)";
+    static final String UNSIGNED_8 = "8-bit unsigned (no contrast scaling)";
 
     @Override
     public void run(final String arg) {
         final ImagePlus input = IJ.getImage();
         if (input == null) {
             IJ.noImage();
-            return;
-        }
-
-        if (input.getBitDepth() == 24) {
-            IJ.error("Unsupported image type",
-                    "RGB images are not supported. Split the channels first, " +
-                    "or use a greyscale/multichannel hyperstack.");
             return;
         }
 
@@ -74,14 +67,29 @@ public class LanczosResizer implements PlugIn {
 
         if (dialog.wasCanceled()) return;
 
-        final double scale = dialog.getNextNumber();
-        final String outputType = dialog.getNextChoice();
-        final boolean antiAlias = dialog.getNextBoolean();
-        final boolean writeProvenance = dialog.getNextBoolean();
+        run(input, dialog.getNextNumber(), dialog.getNextChoice(),
+                dialog.getNextBoolean(), dialog.getNextBoolean());
+    }
+
+    /**
+     * Core resampling routine. Exposed separately from the PlugIn entry point so it
+     * can be invoked directly (macros, batch jobs, unit tests) without a dialog.
+     * Returns the new resampled ImagePlus, or null if nothing was done.
+     */
+    public ImagePlus run(final ImagePlus input, final double scale, final String outputType,
+            final boolean antiAlias, final boolean writeProvenance) {
+        if (input == null) return null;
+
+        if (input.getBitDepth() == 24) {
+            IJ.error("Unsupported image type",
+                    "RGB images are not supported. Split the channels first, " +
+                    "or use a greyscale/multichannel hyperstack.");
+            return null;
+        }
 
         if (!Double.isFinite(scale) || scale <= 0.0) {
             IJ.error("Invalid scale", "Scale must be a finite number greater than zero.");
-            return;
+            return null;
         }
 
         final int outputWidth = Math.max(1,
@@ -97,9 +105,18 @@ public class LanczosResizer implements PlugIn {
             IJ.showStatus("Lanczos resizing plane " + plane + "/" + input.getStackSize());
             IJ.showProgress(plane - 1, input.getStackSize());
 
-            // convertToFloat() returns a new processor; input pixels are untouched.
-            final ImageProcessor working =
-                    input.getStack().getProcessor(plane).convertToFloat();
+            // TypeConverter returns the SAME processor instance when the plane is
+            // already 32-bit float, so take an explicit copy first: the anti-alias
+            // prefilter below must never write into the original pixels.
+            final ImageProcessor planeProc = input.getStack().getProcessor(plane);
+            final FloatProcessor working;
+            if (planeProc instanceof FloatProcessor) {
+                working = new FloatProcessor(
+                        planeProc.getWidth(), planeProc.getHeight(),
+                        ((float[]) planeProc.getPixels()).clone());
+            } else {
+                working = (FloatProcessor) planeProc.convertToFloat();
+            }
 
             if (scale < 1.0 && antiAlias && prefilterSigma > 0.0) {
                 final GaussianBlur blur = new GaussianBlur();
@@ -115,13 +132,15 @@ public class LanczosResizer implements PlugIn {
             final RealRandomAccessible<FloatType> interpolated =
                     Views.interpolate(Views.extendBorder(img), lanczos);
 
-            // Pixel-centre mapping: x_in = (x_out + 0.5) / scale - 0.5.
-            final double inverseScale = 1.0 / scale;
-            final double offset = 0.5 * inverseScale - 0.5;
+            // Pixel-centre mapping expressed as source -> output, which is the
+            // convention RealViews.affine expects (it inverts internally when
+            // sampling): x_out = scale * x_in + (0.5 * scale - 0.5), i.e. each
+            // output pixel y samples the input at y / scale + 0.5 * (1/scale - 1).
+            final double offset = 0.5 * scale - 0.5;
             final AffineTransform2D transform = new AffineTransform2D();
             transform.set(
-                    inverseScale, 0.0, offset,
-                    0.0, inverseScale, offset);
+                    scale, 0.0, offset,
+                    0.0, scale, offset);
 
             final RealRandomAccessible<FloatType> transformed =
                     RealViews.affine(interpolated, transform);
@@ -138,7 +157,7 @@ public class LanczosResizer implements PlugIn {
             outputStack.addSlice(input.getStack().getSliceLabel(plane), converted);
         }
 
-        ImagePlus output = new ImagePlus(
+        final ImagePlus output = new ImagePlus(
                 input.getShortTitle() + "_Lanczos_" + scale + "x", outputStack);
 
         final int channels = input.getNChannels();
@@ -164,9 +183,15 @@ public class LanczosResizer implements PlugIn {
                     prefilterSigma, inputSha256);
         }
 
-        output.show();
+        // Creating the window requires a display; batch/headless callers still get
+        // the result via the returned ImagePlus.
+        if (!java.awt.GraphicsEnvironment.isHeadless()) {
+            output.show();
+        }
         IJ.showProgress(1.0);
         IJ.showStatus("Lanczos resizing complete; original image unchanged.");
+
+        return output;
     }
 
     private static ImageProcessor convertOutput(final ImageProcessor floatOutput,
